@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _thrustForce = 50f;
     [SerializeField] private float _projectileSpeed = 10f;
     [SerializeField] private float _cooldownBetweenShots = 10f;
+    [SerializeField] private float _bulletTimeout = 0.8f;
 
     private bool _onCooldown;
     private PrefabObjectPool<Bullet> _prefabObjectPool;
@@ -26,13 +27,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (!GameManager.Instance.IsAlive) return;
-        
-        HandleAcceletation();
+
+        GameManager.Instance.KeepInBounds(_transform);
+        HandleAcceleration();
         HandleRotation();
         HandleBullets();
     }
 
-    private void HandleAcceletation()
+    private void HandleAcceleration()
     {
         if (!Input.GetKey(KeyCode.UpArrow)) return;
         
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour
         var bullet = _prefabObjectPool.GetObject();
         bullet.transform.position = _transform.position;
         bullet.Rigidbody.velocity = _transform.up * _projectileSpeed;
+        StartCoroutine(SelfDestruct(bullet));
     }
 
     
@@ -61,6 +64,12 @@ public class PlayerController : MonoBehaviour
         _onCooldown = true;
         yield return new WaitForSeconds(_cooldownBetweenShots);
         _onCooldown = false;
+    }
+    
+    private IEnumerator SelfDestruct(Bullet bullet)
+    {
+        yield return new WaitForSeconds(_bulletTimeout);
+        _prefabObjectPool.ReturnObject(bullet);
     }
     
     private static bool RotatingLeft => Input.GetKey(KeyCode.LeftArrow); 
