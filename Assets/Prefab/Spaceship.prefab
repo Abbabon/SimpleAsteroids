@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5656192572780835561}
   - component: {fileID: 5917017735615763222}
   - component: {fileID: 4005410462982373640}
+  - component: {fileID: 141030686551695048}
   m_Layer: 0
   m_Name: Spaceship
   m_TagString: Untagged
@@ -77,6 +78,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 6916350669873575595, guid: 0c35bd8229fd949c58b236df3dde0d4f, type: 3}
   _rigidbody2D: {fileID: 5656192572780835561}
   _transform: {fileID: 5100804097311949593}
+  _animator: {fileID: 141030686551695048}
   _shipRotationSpeed: 250
   _thrustForce: 300
   _projectileSpeed: 10
@@ -134,6 +136,27 @@ PolygonCollider2D:
       - {x: 0.114059895, y: -0.19560319}
       - {x: 0.17669752, y: -0.16470821}
   m_UseDelaunayMesh: 0
+--- !u!95 &141030686551695048
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2233268306275766801}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e267882926a944a24ab30c3af1c0e94a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6773173205089902280
 GameObject:
   m_ObjectHideFlags: 0

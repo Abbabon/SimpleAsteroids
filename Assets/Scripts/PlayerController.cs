@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private Transform _transform;
+    [SerializeField] private Animator _animator;
 
     [Header("Parameters")]
     [SerializeField] private float _shipRotationSpeed = 200f;
@@ -18,7 +19,8 @@ public class PlayerController : MonoBehaviour
 
     private bool _onCooldown;
     private PrefabObjectPool<Bullet> _prefabObjectPool;
-    
+    private static readonly int IsFlying = Animator.StringToHash("IsFlying");
+
     private void Awake()
     {
         _prefabObjectPool = new PrefabObjectPool<Bullet>(_bulletPrefab);
@@ -36,8 +38,10 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAcceleration()
     {
-        if (!Input.GetKey(KeyCode.UpArrow)) return;
+        var pressingThrottle = Input.GetKey(KeyCode.UpArrow);
+        _animator.SetBool(IsFlying, pressingThrottle);
         
+        if (!pressingThrottle) return;
         var thrustDirection = _transform.up;
         _rigidbody2D.AddForce(thrustDirection * _thrustForce * Time.deltaTime);
     }
