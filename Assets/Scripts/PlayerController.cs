@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
         var bullet = _prefabObjectPool.GetObject();
         bullet.transform.position = _transform.position;
         bullet.Rigidbody.velocity = _transform.up * _projectileSpeed;
+
+        bullet.TimedOut = false;
         StartCoroutine(SelfDestruct(bullet));
     }
 
@@ -68,7 +70,12 @@ public class PlayerController : MonoBehaviour
     
     private IEnumerator SelfDestruct(Bullet bullet)
     {
-        yield return new WaitForSeconds(_bulletTimeout);
+        var startTime = Time.time;
+
+        while (Time.time - startTime < _bulletTimeout && !bullet.TimedOut)
+        {
+            yield return null;
+        }
         _prefabObjectPool.ReturnObject(bullet);
     }
     
@@ -86,5 +93,11 @@ public class PlayerController : MonoBehaviour
         {
             _transform.Rotate(_shipRotationSpeed * Time.deltaTime * transform.forward * -1);
         }
+    }
+
+    public void ReturnBullet(Bullet bullet)
+    {
+        bullet.Rigidbody.HaltRigidbody();
+        bullet.TimedOut = true;
     }
 }
