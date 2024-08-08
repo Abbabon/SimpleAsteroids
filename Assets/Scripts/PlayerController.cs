@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAcceleration()
     {
-        var pressingThrottle = Input.GetKey(KeyCode.UpArrow);
+        var pressingThrottle = InputController.Instance.PressingThrottle;
         _animator.SetBool(IsFlying, pressingThrottle);
         
         if (!pressingThrottle) return;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     
     private void HandleBullets()
     {
-        if (!Input.GetKey(KeyCode.Space))
+        if (!InputController.Instance.PressingFire)
             return;
 
         if (_onCooldown)
@@ -81,19 +81,16 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         _prefabObjectPool.ReturnObject(bullet);
-    }
-    
-    private static bool RotatingLeft => Input.GetKey(KeyCode.LeftArrow); 
-    private static bool RotatingRight => Input.GetKey(KeyCode.RightArrow); 
+    } 
     
     
     private void HandleRotation()
     {
-        if (RotatingLeft)
+        if (InputController.Instance.RotatingLeft)
         {
             _transform.Rotate(_shipRotationSpeed * Time.deltaTime * transform.forward);
         }
-        else if (RotatingRight)
+        else if (InputController.Instance.RotatingRight)
         {
             _transform.Rotate(_shipRotationSpeed * Time.deltaTime * transform.forward * -1);
         }
