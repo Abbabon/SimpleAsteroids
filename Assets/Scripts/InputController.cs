@@ -49,8 +49,8 @@ public class InputController : MonoBehaviour
     {
         RotatingLeft = Input.GetKey(KeyCode.LeftArrow);
         RotatingRight = Input.GetKey(KeyCode.RightArrow);
-        PressingFire = Input.GetKey(KeyCode.RightArrow);
-        PressingThrottle = Input.GetKey(KeyCode.RightArrow);
+        PressingFire = Input.GetKey(KeyCode.Space);
+        PressingThrottle = Input.GetKey(KeyCode.UpArrow);
     }
 
     public bool RotatingLeft { get; set; }
